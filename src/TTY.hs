@@ -108,7 +108,7 @@ data Key =
     deriving (Show, Eq)
 
 getKey :: MonadIO m => TTY -> m (Maybe Key)
-getKey tty = liftIO . fmap join . timeout 100000 $
+getKey tty = liftIO . fmap join . fmap Just $ -- timeout 100000 $
   getChar tty >>= \case
     '\DEL' -> return (Just Bksp)
     '\ESC' -> getChar tty >>= \case
